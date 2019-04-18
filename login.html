@@ -14,12 +14,41 @@
 <script src="js/Sellerber.js" type="text/javascript"></script>
 <script src="js/shopFrame.js" type="text/javascript"></script>
 <script type="text/javascript" src="js/jquery.cookie.js"></script>
+    <script type='text/javascript'>
+        var code1 ; //在全局定义验证码
+
+        function createCode(){
+            code1 = "";
+            var codeLength = 4;//验证码的长度
+            var checkCode = document.getElementById("code1");
+            var random = new Array(0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R',
+                'S','T','U','V','W','X','Y','Z');//随机数
+            for(var i = 0; i < codeLength; i++) {//循环操作
+                var index = Math.floor(Math.random()*36);//取得随机数的索引（0~35）
+                code1 += random[index];//根据索引取得随机数加到code上
+            }
+            checkCode.value = code1;//把code值赋给验证码
+        }
+        //校验验证码
+        function validate(){
+            var inputCode = document.getElementById("input1").value.toUpperCase(); //取得输入的验证码并转化为大写
+            if(inputCode.length <= 0) { //若输入的验证码长度为0
+                alert("请输入验证码！"); //则弹出请输入验证码
+            }else if(inputCode != code1 ) { //若输入的验证码与产生的验证码不一致时
+                alert("验证码输入错误！@_@"); //则弹出验证码输入错误
+                createCode();//刷新验证码
+                document.getElementById("input1").value = "";//清空文本框
+            }else { //输入正确时
+                alert("合格！^-^");
+            }
+        }
+    </script>
 <title>用户登录</title>
 </head>
 
-<body class="login-layout Reg_log_style">
+<body onload='createCode()' class="login-layout Reg_log_style" >
 <div class="logintop">    
-    <span>欢迎后台管理界面平台</span>    
+    <span>LOGIN</span>
     <ul>
     <li><a href="#">返回首页</a></li>
     <li><a href="#">帮助</a></li>
@@ -28,21 +57,25 @@
     </div>
     <div class="loginbody">
 <div class="login-container">
-	<div class="center"> <img src="images/logo.png" /></div>
+	<div class="center"style="margin-top: 25px;"> <img style="width: 300px;height: 100px;" src="images/logo_01.png" /></div>
 							<div class="space-6"></div>
 							<div class="position-relative">
 								<div id="login-box" class="login-box widget-box no-border visible">				
                                   <div class="login-main">
                                   <div class="clearfix">
-                                  <div class="login_icon"><img src="images/login_img.png" /></div>
+                                  <div class="login_icon"><img style="width: 300px;height: 300px;" src="images/manager_logo.jpg"/></div>
 									<form class="" style=" width:300px; float:right; margin-right:50px;">
-                                    <h4 class="title_name"><img src="images/login_title.png" /></h4>
+                                    <h4 class="title_name"style="color: red"><span>管理员登录</span></h4>
 										<fieldset>
-										<ul>
+<ul>
    <li class="frame_style form_error"><label class="user_icon"></label><input name="" type="text" data-name="用户名" id="username"/><i>用户名</i></li>
    <li class="frame_style form_error"><label class="password_icon"></label><input name="" type="password"   data-name="密码" id="userpwd"/><i>密码</i></li>
-   <li class="frame_style form_error"><label class="Codes_icon"></label><input name="" type="text"   data-name="验证码" id="Codes_text"/><i>验证码</i><div class="Codes_region"><img src="images/yanzhengma.png" width="100%" height="38px"></div></li>  
-  </ul>
+   <div>
+       <li class="frame_style form_error"><label class="Codes_icon"></label><input type = "text" id = "input1" data-name="验证码" /></li>
+       <input type="button" id="code1" onclick="createCode()" style="width:60px" title='点击更换验证码' />
+       <input type = "button" value = "验证" onclick = "validate()"/>
+   </div>
+</ul>
     <div class="space"></div>
                               <div class="clearfix">
                                   <label class="inline">
@@ -62,7 +95,7 @@
                       </div>
 
                       <div class="social-login ">
-                      为了更好的体验性，本网站系统不再对IE8（含IE8）以下浏览器支持，请见谅。
+                      #暂无通知
                       </div>
                   </div><!-- /login-main -->
 
@@ -72,9 +105,10 @@
       </div><!-- /position-relative -->
   </div>
  </div>
-                        <div class="loginbm">版权所有  2016  <a href=""></a> </div><strong></strong>
+                        <div class="loginbm">点击这里登录用户界面<a href=""></a> </div><strong></strong>
 </body>
 </html>
+
 <script type="text/javascript">
 $('#login_btn').on('click', function(){
 	     var num=0;
@@ -91,8 +125,8 @@ $('#login_btn').on('click', function(){
             return false;            
           } 
 		 });
-		  if(num>0){  return false;}	 	
-          else{
+		  if(num>0){  return false;}
+          else {
 			  layer.alert('登陆成功！',{
                title: '提示框',				
 			   icon:1,		
